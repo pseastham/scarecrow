@@ -1,3 +1,5 @@
+<img src="docs/scarecrow_logo_large.png" width="350" />
+
 # Scarecrow
 
 Scarecrow is a python package for the analysis of electrophysiological data. 
