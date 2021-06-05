@@ -1,4 +1,4 @@
-<img src="docs/scarecrow_logo_large.png" width="350" />
+<img src="docs/scarecrow_logo.png" width="350" />
 
 # Scarecrow
 
