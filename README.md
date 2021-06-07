@@ -5,6 +5,7 @@
 # Scarecrow
 
 [![Documentation Status](https://readthedocs.org/projects/scarecrow/badge/?version=latest)](https://scarecrow.readthedocs.io/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.com/pseastham/scarecrow.svg?branch=main)](https://travis-ci.com/pseastham/scarecrow)
 
 Scarecrow is a python package for the analysis of electrophysiological data. 
 
