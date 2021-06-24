@@ -364,29 +364,29 @@ def raise_if_not_multiple_spikes(intervals):
 
 
 # delete these in production - this is just for development
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 
-def plot_full(abf):
-    fig = plt.figure(figsize=(8, 5))
+#def plot_full(abf):
+#    fig = plt.figure(figsize=(8, 5))
+#
+#    ax1 = fig.add_subplot(211)
+#    for sweepNumber in abf.sweepList:
+#        abf.setSweep(sweepNumber)
+#        ax1.plot(abf.sweepY, color='b')
+#        ax1.set_ylabel("ADC (measurement)")
+#        ax1.set_xlabel("sweep point (index)")
 
-    ax1 = fig.add_subplot(211)
-    for sweepNumber in abf.sweepList:
-        abf.setSweep(sweepNumber)
-        ax1.plot(abf.sweepY, color='b')
-        ax1.set_ylabel("ADC (measurement)")
-        ax1.set_xlabel("sweep point (index)")
+#    ax2 = fig.add_subplot(212)
+#    for sweepNumber in abf.sweepList:
+#        abf.setSweep(sweepNumber)
+#        ax2.plot(abf.sweepC, color='r')
+#        ax2.set_ylabel("DAC (command)")
+#        ax2.set_xlabel("sweep point (index)")
 
-    ax2 = fig.add_subplot(212)
-    for sweepNumber in abf.sweepList:
-        abf.setSweep(sweepNumber)
-        ax2.plot(abf.sweepC, color='r')
-        ax2.set_ylabel("DAC (command)")
-        ax2.set_xlabel("sweep point (index)")
+#    for p1 in abf.sweepEpochs.p1s:
+#        ax1.axvline(p1, color='k', ls='--', alpha=.5)
+#        ax2.axvline(p1, color='k', ls='--', alpha=.5)
 
-    for p1 in abf.sweepEpochs.p1s:
-        ax1.axvline(p1, color='k', ls='--', alpha=.5)
-        ax2.axvline(p1, color='k', ls='--', alpha=.5)
-
-    plt.tight_layout()
-    plt.show()
+#    plt.tight_layout()
+#    plt.show()
