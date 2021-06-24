@@ -8,4 +8,4 @@ jobs:
       install: 
         - pip3 install --upgrade pip  # all three OSes agree about 'pip3'
         - pip3 install -r requirements.txt
-      script: python3 -m unittest -v || python -m unittest -v
+      script: python3 -m unittest -v

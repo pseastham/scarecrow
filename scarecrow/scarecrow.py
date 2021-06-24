@@ -21,10 +21,18 @@ def sag_abf(abf, epoch_ind):
 
 
 def sag_ratio(V):
-    """Computes sag ratio using voltage trace."""
+    """Computes sag ratio using voltage trace.
+
+    Sag ratio is computed as
+
+    $$ SR = \frac{V_{min} - V_{end}}{V_{min}} $$"""
+
     Vmin = np.amin(V)
     Vend = V[-1]
-    return (Vmin - Vend) / Vmin
+    sr = (Vmin - Vend) / Vmin
+    if sr < 0:
+        print("Warning: sag ratio being negative indicates there is no sag")
+    return sr
 def sag_ratio_abf(abf, epoch_ind):
     """Computes sag ratio using abf object and epoch index."""
     p0 = abf.sweepEpochs.p1s[epoch_ind]
