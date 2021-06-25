@@ -149,7 +149,7 @@ def input_membrane_resistance_abf(abf, epoch_start):
 
 
 def rebound_depolarization_abf(abf, epoch_start):
-    Vr = Vrest(abf, 0)
+    Vr = Vrest_abf(abf, 0)
 
     p0 = abf.sweepEpochs.p1s[epoch_start]
 

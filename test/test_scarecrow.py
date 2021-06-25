@@ -8,23 +8,39 @@ from scarecrow import __MOCKDATADIR__
 
 multispiker_datafile = os.path.join(__MOCKDATADIR__, "multispiker.abf")
 
-class postprocessingTest(unittest.TestCase):
+class BasicTests(unittest.TestCase):
 
     def test_sag_ratio(self):
         abf = pyabf.ABF(multispiker_datafile)
+        abf.setSweep(0)
         epoch = 2
         sr_calculated = sc.sag_ratio_abf(abf, epoch)
         sr_known = 0.03198032081127167
-        assert_array_equal(sr_calculated, sr_known)
+        self.assertAlmostEqual(sr_calculated, sr_known)
 
-    def test_get_rebound_depolarization(self):
-        pass
+    def test_rebound_depolarization(self):
+        abf = pyabf.ABF(multispiker_datafile)
+        abf.setSweep(0)
+        epoch = 3
+        rd_calculated = sc.rebound_depolarization_abf(abf, epoch)
+        rd_known = 11.33626556396484375
+        self.assertAlmostEqual(rd_calculated, rd_known)
 
-    def test_get_Vmin(self):
-        pass
+    def test_Vmin(self):
+        abf = pyabf.ABF(multispiker_datafile)
+        abf.setSweep(0)
+        epoch = 2
+        Vmin_calculated = sc.Vmin_abf(abf, epoch)
+        Vmin_known = -124.053955078125
+        self.assertAlmostEqual(Vmin_calculated, Vmin_known)
 
-    def test_get_resting(self):
-        pass
+    def test_Vrest(self):
+        abf = pyabf.ABF(multispiker_datafile)
+        abf.setSweep(0)
+        epoch = 0
+        Vrest_calculated = sc.Vrest_abf(abf, epoch)
+        Vrest_known = -77.83406829833984375
+        self.assertAlmostEqual(Vrest_calculated, Vrest_known)
 
     def test_get_voltage_drop(self):
         pass
