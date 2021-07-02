@@ -20,3 +20,19 @@ Or with this if you do not have git installed on your machine:
 `pip install --upgrade https://github.com/pseastham/scarecrow/tarball/master`
 
 Note that this must be installed in the above manner, and not using the PyPI database. The "scarecrow" on PyPI is unaffiliated and by all accounts inactive.
+
+## Citation
+
+If you use Scarecrow in published work, I would appreciate you starring this Github page, and using the following citation:
+
+```
+@misc{scarecrow,
+  author = {Eastham, Patrick S},
+  title = {Scarecrow},
+  year = {2021},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  doi = {10.5281/zenodo.5055837},
+  howpublished = {\url{https://github.com/pseastham/scarecrow}},
+}
+```
