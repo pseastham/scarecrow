@@ -1,11 +1,13 @@
 import unittest
 import pyabf
 import os
+import numpy as np
 from numpy.testing import assert_array_equal
 
 import scarecrow as sc
 from scarecrow import __MOCKDATADIR__
 
+currentclamp_datafile = os.path.join(__MOCKDATADIR__, 'current_clamp.abf')
 multispiker_datafile = os.path.join(__MOCKDATADIR__, "multispiker.abf")
 
 class BasicTests(unittest.TestCase):
@@ -42,37 +44,65 @@ class BasicTests(unittest.TestCase):
         Vrest_known = -77.83406829833984375
         self.assertAlmostEqual(Vrest_calculated, Vrest_known)
 
-    def test_get_voltage_drop(self):
-        pass
-
-    def test_get_capacitance(self):
-        pass
+    def test_voltage_drop(self):
+        abf = pyabf.ABF(multispiker_datafile)
+        abf.setSweep(0)
+        epoch = 2
+        VD_calculated = sc.voltage_drop_abf(abf, epoch)
+        VD_known = -40.19266510009765625
+        self.assertAlmostEqual(VD_calculated, VD_known)
 
     def test_func_exp(self):
-        pass
+        x = 5.12312983
+        a = 0.2738166846
+        b = -3.31443
+        c = 2.01314
+        val_computed = sc.func_exp(x, a, b, c)
+        val_known = a * np.exp(b * x) + c
+        self.assertAlmostEqual(val_computed, val_known)
 
-    def test_get_time_constant(self):
-        pass
+    def test_time_constant(self):
+        abf = pyabf.ABF(currentclamp_datafile)
+        abf.setSweep(4)
+        epoch = 2
+        tau_calculated = sc.time_constant_abf(abf, epoch)
+        tau_known = 0.00907562407631052475709
+        self.assertAlmostEqual(tau_calculated, tau_known)
 
-    def test_get_input_membrane_resistance(self):
-        pass
+    def test_input_membrane_resistance(self):
+        abf = pyabf.ABF(currentclamp_datafile)
+        abf.setSweep(4)
+        epoch = 2
+        Rm_calculated = sc.input_membrane_resistance_abf(abf, epoch)
+        Rm_known = 0.172119140625
+        self.assertAlmostEqual(Rm_calculated, Rm_known)
 
-    def test_compute_rebound_depolarization(self):
+    def test_capacitance(self):
+        abf = pyabf.ABF(currentclamp_datafile)
+        abf.setSweep(4)
+        epoch = 2
+        tau = sc.time_constant_abf(abf, epoch)
+        Rm = sc.input_membrane_resistance_abf(abf, epoch)
+        C_calculated = sc.capacitance(tau, Rm)
+        C_known = 0.0527287322220821377
+        self.assertAlmostEqual(C_calculated, C_known)
+
+    def test_rebound_depolarization(self):
         pass
 
     def test_find_first_spike_tind(self):
         pass
 
-    def test_get_spike_amplitude(self):
+    def test_spike_amplitude(self):
+        pass
+
+    def test_spike_width(self):
+        pass
+
+    def test_spike_latency(self):
         pass
 
     def test_find_nearest_idx(self):
-        pass
-
-    def test_get_spike_width(self):
-        pass
-
-    def test_get_spike_latency(self):
         pass
 
     def test_get_first_spike_tind(self):

@@ -1,3 +1,9 @@
+"""
+.. module:: scarecrow
+   :synopsis: defines functions for computing features for electrophysiology
+   data.
+"""
+
 import numpy as np
 from scipy.optimize import curve_fit
 from scipy.signal import argrelmax
