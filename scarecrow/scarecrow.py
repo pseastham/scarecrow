@@ -229,7 +229,7 @@ def first_spike_tind(V, startind=0):
         raise NoSpikeFoundException
 
     return spike_tind + startind
-def first_spike_tind(abf, epoch_start, startind=0):
+def first_spike_tind_abf(abf, epoch_start, startind=0):
     """ returns t_max for spike time """
     p0 = abf.sweepEpochs.p1s[epoch_start]
     V = abf.sweepY[p0:-1]
