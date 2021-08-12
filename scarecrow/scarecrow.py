@@ -11,8 +11,6 @@ from scipy.signal import argrelmax
 from .exceptions import NoSpikeFoundException, NoMultipleSpikesException
 
 
-MISSING = NaN
-
 def sag(V):
     """Computes sag using voltage trace."""
     Vmin = np.amin(V)
