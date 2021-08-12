@@ -11,6 +11,8 @@ from scipy.signal import argrelmax
 from .exceptions import NoSpikeFoundException, NoMultipleSpikesException
 
 
+MISSING = NaN
+
 def sag(V):
     """Computes sag using voltage trace."""
     Vmin = np.amin(V)
@@ -168,6 +170,9 @@ def rebound_depolarization_abf(abf, epoch_start):
 def spike_amplitude(V, t_spike):
     """Computes spike amplitude from voltage trace V and
     spike index t_spike."""
+    # handle no spike found
+    if t_spike is None:
+        return None
     Vmax = V[t_spike]
     Vmin = np.min(V[t_spike+1:t_spike+500])
 
@@ -178,6 +183,9 @@ def spike_amplitude_abf(abf, t_spike, epoch_start=3):
 
     Note that t_spike should be found within the same epoch, otherwise there
     be an index mismatch."""
+    # handle no spike found
+    if t_spike is None:
+        return None
     p0 = abf.sweepEpochs.p1s[epoch_start]
     V = abf.sweepY[p0:-1]
 
@@ -194,6 +202,10 @@ def find_nearest_idx(arr, val):
 def spike_width(t, V, t_spike, spike_amp):
     """Computes spike width for time t, voltage trace V, and index t_spike
     and voltage amplitude `spike_amp`."""
+    # handle no spike found
+    if t_spike is None:
+        return None
+
     Vmin = np.min(V[t_spike+1:t_spike+500])
     id1 = find_nearest_idx(V[t_spike-100:t_spike], spike_amp/2 + Vmin) \
         + t_spike - 100
@@ -206,6 +218,9 @@ def spike_width_abf(abf, t_spike, spike_amp, epoch_start=3):
 
     Note that t_spike should be found within the same epoch, otherwise there
     be an index mismatch."""
+    # handle no spike found
+    if t_spike is None:
+        return None
     p0 = abf.sweepEpochs.p1s[epoch_start]
     t = abf.sweepX[p0:-1]
     V = abf.sweepY[p0:-1]
@@ -227,8 +242,8 @@ def first_spike_tind(V, startind=0):
 
     if found_spike is False:
         raise NoSpikeFoundException
-
-    return spike_tind + startind
+    else:
+        return spike_tind + startind
 def first_spike_tind_abf(abf, epoch_start, startind=0):
     """ returns t_max for spike time """
     p0 = abf.sweepEpochs.p1s[epoch_start]
@@ -312,7 +327,7 @@ def avg_spike_frequency(t, V):
     try:
         raise_if_not_multiple_spikes(intervals)
     except NoMultipleSpikesException:
-        return 0
+        return None
 
     avg_int = np.average(intervals)
     return 1/avg_int
