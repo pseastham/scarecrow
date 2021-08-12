@@ -181,9 +181,6 @@ def spike_amplitude_abf(abf, t_spike, epoch_start=3):
 
     Note that t_spike should be found within the same epoch, otherwise there
     be an index mismatch."""
-    # handle no spike found
-    if t_spike is None:
-        return None
     p0 = abf.sweepEpochs.p1s[epoch_start]
     V = abf.sweepY[p0:-1]
 
@@ -205,9 +202,14 @@ def spike_width(t, V, t_spike, spike_amp):
         return None
 
     Vmin = np.min(V[t_spike+1:t_spike+500])
-    id1 = find_nearest_idx(V[t_spike-100:t_spike], spike_amp/2 + Vmin) \
+    minval = np.max([t_spike - 100, 0])
+    if len(V) > t_spike+500:
+        maxval = -1
+    else:
+        maxval = t_spike+500
+    id1 = find_nearest_idx(V[minval:t_spike], spike_amp/2 + Vmin) \
         + t_spike - 100
-    id2 = find_nearest_idx(V[t_spike+1:t_spike+500], spike_amp/2 + Vmin) \
+    id2 = find_nearest_idx(V[t_spike+1:maxval], spike_amp/2 + Vmin) \
         + t_spike + 1
     return t[id2] - t[id1]
 def spike_width_abf(abf, t_spike, spike_amp, epoch_start=3):
