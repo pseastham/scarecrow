@@ -266,7 +266,7 @@ def all_spike_ind(t, V):
     indval = 0
     while indval < len(t):
         try:
-            tspike = first_spike_tind(t[indval:], V[indval:], startind=indval)
+            tspike = first_spike_tind(V[indval:], startind=indval)
             spike_indices.append(tspike)
             indval = tspike
         except NoSpikeFoundException:
