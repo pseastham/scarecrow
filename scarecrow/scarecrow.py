@@ -231,7 +231,7 @@ def first_spike_tind(V, startind=0):
     """Finds the index of the first spike. The value of startind can be
     used as an offset in case t and V are slices of a larger array, but you
     want the index for those arrays."""
-    tarr = argrelmax(V, order=5)[0]
+    tarr = argrelmax(V, order=1)[0]
     found_spike = False
 
     for val in tarr:
