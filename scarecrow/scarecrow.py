@@ -6,7 +6,7 @@
 
 import numpy as np
 from scipy.optimize import curve_fit
-from scipy.signal import argrelmax
+from scipy.signal import find_peaks
 
 from .exceptions import NoSpikeFoundException, NoMultipleSpikesException
 
@@ -231,19 +231,17 @@ def first_spike_tind(V, startind=0):
     """Finds the index of the first spike. The value of startind can be
     used as an offset in case t and V are slices of a larger array, but you
     want the index for those arrays."""
-    tarr = argrelmax(V, order=1)[0]
-    found_spike = False
+    spikes, _ = find_peaks(V, [1, 1000])
 
-    for val in tarr:
-        if (V[val] > -20) and val > 0:      # val > 0 to avoid repeats
-            spike_tind = val
-            found_spike = True
-            break
+    if len(spikes) == 0:
+        found_spike = False
+    else:
+        found_spike = True
 
     if found_spike is False:
         raise NoSpikeFoundException
     else:
-        return spike_tind + startind
+        return spikes[0]
 def first_spike_tind_abf(abf, epoch_start, startind=0):
     """ returns t_max for spike time """
     p0 = abf.sweepEpochs.p1s[epoch_start]
@@ -277,17 +275,9 @@ def spike_latency_abf(abf, epochstart):
 
 def all_spike_ind(t, V):
     """Gets all spike indices from time t and voltage trace V."""
-    spike_indices = []
-    indval = 0
-    while indval < len(t):
-        try:
-            tspike = first_spike_tind(V[indval:], startind=indval)
-            spike_indices.append(tspike)
-            indval = tspike
-        except NoSpikeFoundException:
-            indval = len(t) + 1
+    spikes, _ = find_peaks(V, [1, 1000])
 
-    return spike_indices
+    return spikes
 
 
 def interspike_intervals(t, V):
